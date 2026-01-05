@@ -21,10 +21,21 @@ function Register() {
     try {
       await register(email, username, password)
       // Auto login after registration
-      await login(email, password)
-      navigate('/dashboard')
+      try {
+        await login(email, password)
+        navigate('/dashboard')
+      } catch (loginErr) {
+        // Registration succeeded but login failed
+        setError('Registration successful! Please login manually.')
+        setTimeout(() => {
+          navigate('/login')
+        }, 2000)
+      }
     } catch (err) {
-      setError(err.response?.data?.detail || 'Registration failed. Please try again.')
+      console.error('Registration error:', err)
+      console.error('Error response:', err.response)
+      const errorMessage = err.response?.data?.detail || err.message || 'Registration failed. Please try again.'
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

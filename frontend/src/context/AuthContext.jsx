@@ -27,6 +27,7 @@ export function AuthProvider({ children }) {
       const response = await axios.get(`${API_BASE_URL}/api/me`)
       setUser(response.data)
     } catch (error) {
+      console.error('Fetch user error:', error)
       localStorage.removeItem('token')
       delete axios.defaults.headers.common['Authorization']
     } finally {
@@ -52,12 +53,21 @@ export function AuthProvider({ children }) {
   }
 
   const register = async (email, username, password) => {
-    const response = await axios.post(`${API_BASE_URL}/api/register`, {
-      email,
-      username,
-      password
-    })
-    return response.data
+    try {
+      console.log('Registering user:', { email, username, apiUrl: API_BASE_URL })
+      const response = await axios.post(`${API_BASE_URL}/api/register`, {
+        email,
+        username,
+        password
+      })
+      console.log('Registration successful:', response.data)
+      return response.data
+    } catch (error) {
+      console.error('Registration API error:', error)
+      console.error('Error details:', error.response?.data)
+      // Re-throw with better error message
+      throw error
+    }
   }
 
   const logout = () => {
