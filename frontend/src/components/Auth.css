@@ -16,7 +16,7 @@
 }
 
 .auth-card h1 {
-  color: #667eea;
+  color: #dc2626;
   margin-bottom: 1.5rem;
   text-align: center;
   font-size: 2rem;
@@ -44,13 +44,13 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #dc2626;
 }
 
 .auth-button {
   width: 100%;
   padding: 0.75rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -62,7 +62,7 @@
 
 .auth-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
 }
 
 .auth-button:disabled {
@@ -86,7 +86,7 @@
 }
 
 .auth-link a {
-  color: #667eea;
+  color: #dc2626;
   text-decoration: none;
   font-weight: 500;
 }

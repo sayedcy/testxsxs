@@ -42,13 +42,13 @@
 
 .domain-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #dc2626;
 }
 
 .scan-button {
   width: 100%;
   padding: 0.75rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -61,7 +61,7 @@
 
 .scan-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
 }
 
 .scan-button:disabled {
@@ -97,7 +97,7 @@
 }
 
 .scan-card:hover {
-  border-color: #667eea;
+  border-color: #dc2626;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
@@ -133,7 +133,7 @@
 }
 
 .current-step {
-  color: #667eea;
+  color: #dc2626;
   font-weight: 500;
 }
 
@@ -148,7 +148,7 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(90deg, #dc2626 0%, #991b1b 100%);
   transition: width 0.3s;
 }
 
