@@ -7,6 +7,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from database import SessionLocal
 from models import User
+import hashlib
 
 # Security settings
 SECRET_KEY = "your-secret-key-change-in-production"  # Change this in production!
@@ -18,23 +19,22 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 def get_password_hash(password: str) -> str:
     """
-    Hash a password using bcrypt.
-    Bcrypt has a 72-byte limit, so we truncate longer passwords.
+    Hash a password using SHA256 + bcrypt to remove the 72-byte limit.
+    First hash with SHA256 (no length limit), then bcrypt the result.
     """
-    # Bcrypt has a 72-byte limit, truncate if necessary
-    if len(password.encode('utf-8')) > 72:
-        password = password.encode('utf-8')[:72].decode('utf-8', errors='ignore')
-    return pwd_context.hash(password)
+    # Pre-hash with SHA256 to remove bcrypt's 72-byte limit
+    # SHA256 always produces 64 bytes, which is under bcrypt's 72-byte limit
+    sha256_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    return pwd_context.hash(sha256_hash)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """
     Verify a password against a hash.
-    Bcrypt has a 72-byte limit, so we truncate longer passwords.
+    Uses SHA256 pre-hash to support passwords of any length.
     """
-    # Bcrypt has a 72-byte limit, truncate if necessary
-    if len(plain_password.encode('utf-8')) > 72:
-        plain_password = plain_password.encode('utf-8')[:72].decode('utf-8', errors='ignore')
-    return pwd_context.verify(plain_password, hashed_password)
+    # Pre-hash with SHA256 to match the hashing process
+    sha256_hash = hashlib.sha256(plain_password.encode('utf-8')).hexdigest()
+    return pwd_context.verify(sha256_hash, hashed_password)
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
