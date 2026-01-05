@@ -6,7 +6,7 @@ from models import ScanStatus
 class UserCreate(BaseModel):
     email: EmailStr
     username: str
-    password: str
+    password: str  # NO VALIDATION - accepts any password of any length
 
 class UserResponse(BaseModel):
     id: int

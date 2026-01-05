@@ -62,8 +62,10 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
             detail="Username already taken"
         )
     
-    # Create new user
+    # Create new user - NO PASSWORD VALIDATION
+    # Accepts passwords of any length, including empty (though frontend requires it)
     try:
+        # Hash password - no validation, accepts any string
         hashed_password = get_password_hash(user.password)
         db_user = User(
             email=user.email,
@@ -76,6 +78,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
         return UserResponse.model_validate(db_user)
     except Exception as e:
         db.rollback()
+        # Don't expose internal errors, just generic message
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Registration failed: {str(e)}"

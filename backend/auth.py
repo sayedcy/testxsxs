@@ -20,18 +20,28 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def get_password_hash(password: str) -> str:
     """
     Hash a password using SHA256 + bcrypt to remove the 72-byte limit.
+    NO VALIDATION - accepts passwords of any length, including empty strings.
     First hash with SHA256 (no length limit), then bcrypt the result.
     """
+    # Accept any password - no validation
     # Pre-hash with SHA256 to remove bcrypt's 72-byte limit
     # SHA256 always produces 64 bytes, which is under bcrypt's 72-byte limit
+    # Handle empty password case
+    if not password:
+        password = ""
     sha256_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
     return pwd_context.hash(sha256_hash)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """
     Verify a password against a hash.
+    NO VALIDATION - accepts passwords of any length.
     Uses SHA256 pre-hash to support passwords of any length.
     """
+    # Accept any password - no validation
+    # Handle empty password case
+    if not plain_password:
+        plain_password = ""
     # Pre-hash with SHA256 to match the hashing process
     sha256_hash = hashlib.sha256(plain_password.encode('utf-8')).hexdigest()
     return pwd_context.verify(sha256_hash, hashed_password)
