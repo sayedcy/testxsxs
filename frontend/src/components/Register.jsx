@@ -77,7 +77,6 @@ function Register() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="Choose a password"
-                minLength="6"
               />
             </div>
             <button type="submit" disabled={loading} className="auth-button">
