@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import axios from 'axios'
+import API_BASE_URL from '../config'
 
 const AuthContext = createContext()
 
@@ -23,7 +24,7 @@ export function AuthProvider({ children }) {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/me')
+      const response = await axios.get(`${API_BASE_URL}/api/me`)
       setUser(response.data)
     } catch (error) {
       localStorage.removeItem('token')
@@ -38,7 +39,7 @@ export function AuthProvider({ children }) {
     formData.append('username', email)
     formData.append('password', password)
     
-    const response = await axios.post('http://localhost:8000/api/token', formData, {
+    const response = await axios.post(`${API_BASE_URL}/api/token`, formData, {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     })
     
@@ -51,7 +52,7 @@ export function AuthProvider({ children }) {
   }
 
   const register = async (email, username, password) => {
-    const response = await axios.post('http://localhost:8000/api/register', {
+    const response = await axios.post(`${API_BASE_URL}/api/register`, {
       email,
       username,
       password

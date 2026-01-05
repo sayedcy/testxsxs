@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from './Navbar'
+import API_BASE_URL from '../config'
 import './Dashboard.css'
 
 function Dashboard() {
@@ -20,7 +21,7 @@ function Dashboard() {
 
   const fetchScans = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/scans')
+      const response = await axios.get(`${API_BASE_URL}/api/scans`)
       setScans(response.data)
     } catch (err) {
       console.error('Error fetching scans:', err)
@@ -33,7 +34,7 @@ function Dashboard() {
     setLoading(true)
 
     try {
-      const response = await axios.post('http://localhost:8000/api/scans', {
+      const response = await axios.post(`${API_BASE_URL}/api/scans`, {
         domain: domain.trim()
       })
       setDomain('')

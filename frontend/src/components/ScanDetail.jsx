@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from './Navbar'
+import API_BASE_URL from '../config'
 import './ScanDetail.css'
 
 function ScanDetail() {
@@ -22,7 +23,7 @@ function ScanDetail() {
 
   const fetchScan = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/scans/${id}`)
+      const response = await axios.get(`${API_BASE_URL}/api/scans/${id}`)
       setScan(response.data)
       setLoading(false)
     } catch (err) {

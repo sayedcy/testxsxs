@@ -18,10 +18,17 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Security Scanner API", version="1.0.0")
 
-# CORS middleware
+# CORS middleware - Allow VPS IP and localhost
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "http://37.60.241.19:5173",
+        "http://37.60.241.19:3000",
+        "http://37.60.241.19",
+        "*"  # Allow all origins for development (remove in production)
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
